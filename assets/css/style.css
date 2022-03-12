@@ -1,3 +1,7 @@
+:root {
+    --primary-color: rgb(90, 23, 90);
+}
+
 * {
     box-sizing: border-box;
 }
@@ -34,5 +38,19 @@ header h1 {
 .start-page p {
     font-size: 28px;
     width: 50%;
+}
+
+.quiz-btn {
+    background-color: var(--primary-color);
+    color: aliceblue;
+    border-style: none;
+    padding: 15px;
+    font-size: 24px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.quiz-btn:hover {
+    background-color: rgba(90, 23, 90, 0.8);
 }
 
