@@ -1,8 +1,9 @@
 var mainBody = document.querySelector("#main-body")
-var quizBtn = document.querySelector(".quiz-btn");
+var quizBtn = document.querySelector("#start-btn");
 var timer = document.querySelector("#timer");
 var time = 5;
 var questionNumber = 0;
+var timeScore = "";
 
 //creating array to hold objects for each quiz question
 var questions = [
@@ -63,7 +64,8 @@ var quizStart = function () {
 var endGame = function() {
     cleanUp();
     //save time as score
-    var timeScore = Math.max(0, time);
+    timeScore = Math.max(0, time);
+
     time = 0;
     timer.textContent = "Time: " + time;
     console.log(timeScore);
@@ -74,10 +76,24 @@ var endGame = function() {
     var endHeadEl = document.createElement("h2");
     endHeadEl.textContent = "All Done!"
 
-    // create form to store  
+    // create form to store
+    var endFormEl = document.createElement("form");
+    endFormEl.className = "end-form";
+    endFormEl.innerHTML = "<label>Enter Initials</label><input type='text'></input><button type='button' class='quiz-btn' id='submit-score'>SUBMIT</button>"
 
     endDivEl.appendChild(endHeadEl);
+    endDivEl.appendChild(endFormEl);
     mainBody.appendChild(endDivEl);
+
+    var submitBtn = document.querySelector("#submit-score");
+    console.log(submitBtn);
+    submitBtn.addEventListener("click", submitScore);
+}
+
+var submitScore = function () {
+
+    console.log(timeScore);
+    localStorage.setItem("score", timeScore);
 }
 
 var quizCreator = function (questionNumber) {
@@ -134,8 +150,6 @@ var quizChecker = function (event) {
     var targetData = targetEl.getAttribute("data-correct");
     
     if (targetData === "correct") {
-        targetEl = "";
-        targetData = "";
         var correctHeader = document.createElement("h2");
         correctHeader.className = "question-response correct";
         correctHeader.textContent = "CORRECT!"
