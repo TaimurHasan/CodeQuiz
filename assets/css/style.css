@@ -73,4 +73,20 @@ header h1 {
     color:white;
 }
 
+.question-response {
+    text-align: center;
+    width: 50%;
+    font-size: 42px;
+    border-top: 2px solid black;
+    padding-top: 20px;
+    margin: 0 auto;
+}
+
+.correct {
+    color: green;
+}
+
+.incorrect {
+    color: red;
+}
 
