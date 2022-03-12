@@ -1,7 +1,7 @@
 var mainBody = document.querySelector("#main-body")
 var quizBtn = document.querySelector(".quiz-btn");
 var timer = document.querySelector("#timer");
-var time = 75;
+var time = 5;
 var questionNumber = 0;
 
 //creating array to hold objects for each quiz question
@@ -12,7 +12,12 @@ var questions = [
         "correctChoice": "Alerts"
     },
     {
-        "question": "Commonly used data types do sdfSDFdf include:",
+        "question": "The condition in an if/else statement is enclosed in:",
+        "choices": ["Quotes", "Parenthesis", "Curly Brackets", "Square Brackets"],
+        "correctChoice": "Parenthesis"
+    },
+    {
+        "question": "BLA BLA:",
         "choices": ["Strings", "Booleans", "Alerts", "Numbers"],
         "correctChoice": "Alerts"
     }
@@ -29,15 +34,16 @@ var timerStart = function () {
     // time interval with function that will decrement time variable by 1 every second
     var timeInterval = window.setInterval(
         function () {
-            if(time > 0) {
-                timer.textContent = "Time: " + time;
-                time--;
-            } else if (time <= 0) {
-                clearInterval(timeInterval);
-                time = 0;
-                timer.textContent = "Time: " + time;
-            }
-        }, 1000
+                if(time > 0 && questionNumber < questions.length) {
+                    timer.textContent = "Time: " + time;
+                    time--;
+                } else if (time <= 0 && questionNumber < questions.length) {
+                    clearInterval(timeInterval);
+                    timer.textContent = "Time: " + time;
+                    alert("You have run out of time!");
+                    endGame();
+                }
+            }, 1000
     )
 }
 
@@ -45,11 +51,47 @@ var timerStart = function () {
 //function to start the quiz
 var quizStart = function () {
     cleanUp();
-    timerStart();
-    quizCreator(questionNumber);
+    if(questionNumber < questions.length) {
+        quizCreator(questionNumber);
+    } else {
+        console.log("finish");
+        endGame();
+    }
+    
+}
+
+var endGame = function() {
+    cleanUp();
+    //save time as score
+    var timeScore = Math.max(0, time);
+    time = 0;
+    timer.textContent = "Time: " + time;
+    console.log(timeScore);
+    
+    var endDivEl = document.createElement("div");
+    endDivEl.className = "quiz-page";
+
+    var endHeadEl = document.createElement("h2");
+    endHeadEl.textContent = "All Done!"
+
+    // create form to store  
+
+    endDivEl.appendChild(endHeadEl);
+    mainBody.appendChild(endDivEl);
 }
 
 var quizCreator = function (questionNumber) {
+    //start timer only on first question
+    if(questionNumber === 0) {
+        timerStart();
+    }
+    
+    //prevent next questions from loading if time has run out
+    if(time === 0) {
+        endGame();
+        return false;
+    }
+
     //create div to hold question heading and choice list
     var quizDivEl = document.createElement("div");
     quizDivEl.className = "quiz-page";
@@ -100,15 +142,16 @@ var quizChecker = function (event) {
 
         mainBody.appendChild(correctHeader);
         questionNumber++;
-        setTimeout(quizStart, 2000);
+        setTimeout(quizStart, 1000);
     } else if (targetData === "incorrect") {
         var correctHeader = document.createElement("h2");
         correctHeader.className = "question-response incorrect";
         correctHeader.textContent = "INCORRECT!"
 
         mainBody.appendChild(correctHeader);
-
         time = time - 10;
+        questionNumber++;
+        setTimeout(quizStart, 1000);
     }
     
 };
