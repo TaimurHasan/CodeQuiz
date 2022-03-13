@@ -1,4 +1,5 @@
-var mainBody = document.querySelector("#main-body")
+var mainBody = document.querySelector("#main-body");
+var scorePage = document.querySelector("#display-scores");
 var quizBtn = document.querySelector("#start-btn");
 var timer = document.querySelector("#timer");
 var time = 60;
@@ -97,14 +98,7 @@ var submitScore = function () {
     var scoreNameInput = document.querySelector("input[name='initials']").value;
     console.log(scoreNameInput);
 
-    var savedScores = localStorage.getItem("score", savedScores);
-
-    if(!savedScores) {
-        savedScores = [];
-        return false;
-    }
-
-    savedScores = JSON.parse(savedScores);
+    loadScores();
 
     var scoreId = savedScores.length + 1;
     var scoreObj = {
@@ -117,11 +111,44 @@ var submitScore = function () {
     console.log(savedScores);
     localStorage.setItem("score", JSON.stringify(savedScores));
 
-    cleanUp();
+    displayScores();
 }
 
 var loadScores = function () {
-    localStorage.getItem("score");
+    savedScores = localStorage.getItem("score", savedScores);
+
+    if(!savedScores) {
+        savedScores = [];
+        return false;
+    }
+
+    savedScores = JSON.parse(savedScores);
+}
+
+var displayScores = function () {
+    cleanUp();
+    loadScores();
+    console.log(savedScores);
+
+    var scoreDivEl = document.createElement("div");
+    scoreDivEl.className = "score-list";
+    var scoreHeadEl = document.createElement("h1");
+    scoreHeadEl.textContent = "Name/High-Score";
+    
+
+    var scoreListEl = document.createElement("ol");
+
+    for (var i = 0; i < 11; i++) {
+        var scoreItemEl = document.createElement("li");
+        var name = savedScores[i].name
+        var score = savedScores[i].score
+        scoreItemEl.textContent = name + ": " + score;
+        scoreListEl.appendChild(scoreItemEl);
+    }
+
+    scoreDivEl.appendChild(scoreHeadEl);
+    scoreDivEl.appendChild(scoreListEl);
+    mainBody.appendChild(scoreDivEl);
 }
 
 var quizCreator = function (questionNumber) {
@@ -209,3 +236,4 @@ var quizChecker = function (event) {
 //add click event listener to the quiz button to start functions
 quizBtn.addEventListener("click", quizStart);
 mainBody.addEventListener("click", quizChecker);
+scorePage.addEventListener("click", displayScores);
