@@ -2,7 +2,7 @@ var mainBody = document.querySelector("#main-body");
 var scorePage = document.querySelector("#display-scores");
 var quizBtn = document.querySelector("#start-btn");
 var timer = document.querySelector("#timer");
-var time = 60;
+var time = 75;
 var questionNumber = 0;
 var timeScore = "";
 var savedScores = [];
@@ -48,8 +48,10 @@ var timerStart = function () {
 
 //function to start the quiz
 var quizStart = function () {
+    if(questionNumber === 0) {
+        timerStart();
+    }
     cleanUp();
-
     if(questionNumber < questions.length) {
         quizCreator(questionNumber);
     } else {
@@ -157,16 +159,21 @@ var displayScores = function () {
         scoreListEl.appendChild(scoreItemEl);
     }
 
+    var homeBtn = document.createElement("p");
+    homeBtn.className = "quiz-btn";
+    homeBtn.innerHTML = "<a href='./index.html'>Home</a>";
+
+
+
     scoreDivEl.appendChild(scoreHeadEl);
     scoreDivEl.appendChild(scoreListEl);
+    scoreDivEl.appendChild(homeBtn);
     mainBody.appendChild(scoreDivEl);
 }
 
 var quizCreator = function (questionNumber) {
     //start timer only on first question
-    if(questionNumber === 0) {
-        timerStart();
-    }
+    
     
     //prevent next questions from loading if time has run out
     if(time === 0) {

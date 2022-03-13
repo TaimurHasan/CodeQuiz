@@ -136,5 +136,10 @@ header h1 {
     padding: 5px;
 }
 
+.score-list p a {
+    text-decoration: none;
+    color: aliceblue;
+}
+
 
 
