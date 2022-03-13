@@ -81,37 +81,46 @@ var endGame = function() {
     // create form to store
     var endFormEl = document.createElement("form");
     endFormEl.className = "end-form";
-    endFormEl.innerHTML = "<label>Enter Initials</label><input type='text' name='initials'></input><button type='button' class='quiz-btn' id='submit-score'>SUBMIT</button>"
+    endFormEl.innerHTML = "<label>Enter Initials</label><input type='text' name='initials'></input><button type='submit' class='quiz-btn' id='submit-score'>SUBMIT</button>"
 
     endDivEl.appendChild(endHeadEl);
     endDivEl.appendChild(endPEl);
     endDivEl.appendChild(endFormEl);
     mainBody.appendChild(endDivEl);
 
-    var submitBtn = document.querySelector("#submit-score");
-    submitBtn.addEventListener("click", submitScore);
+    var submitBtn = document.querySelector(".end-form");
+    
+    submitBtn.addEventListener("submit", submitScore);
 }
 
-var submitScore = function () {
-
+var submitScore = function (event) {
+    event.preventDefault();
     console.log(timeScore);
     var scoreNameInput = document.querySelector("input[name='initials']").value;
     console.log(scoreNameInput);
 
-    loadScores();
+    // force user to enter a name for saving their score
+    if (!scoreNameInput) {
+        alert("The initials field cannot be blank. Please enter your initials!");
+    } else {
 
-    var scoreId = savedScores.length + 1;
-    var scoreObj = {
-        name: scoreNameInput,
-        score: timeScore,
-        id: scoreId
-    }
+        loadScores();
 
-    savedScores.push(scoreObj);
-    console.log(savedScores);
-    localStorage.setItem("score", JSON.stringify(savedScores));
+        var scoreId = savedScores.length + 1;
+        var scoreObj = {
+            name: scoreNameInput,
+            score: timeScore,
+            id: scoreId
+        }
 
-    displayScores();
+        savedScores.push(scoreObj);
+        // sort by higher score
+        savedScores.sort(function(a,b) {return (b.score - a.score)})
+        console.log(savedScores);
+        localStorage.setItem("score", JSON.stringify(savedScores));
+
+        displayScores();
+    };
 }
 
 var loadScores = function () {
@@ -130,6 +139,7 @@ var displayScores = function () {
     loadScores();
     console.log(savedScores);
 
+
     var scoreDivEl = document.createElement("div");
     scoreDivEl.className = "score-list";
     var scoreHeadEl = document.createElement("h1");
@@ -138,7 +148,8 @@ var displayScores = function () {
 
     var scoreListEl = document.createElement("ol");
 
-    for (var i = 0; i < 11; i++) {
+    // create highscore list up to max of 10 list items
+    for (var i = 0; i < Math.min(10, savedScores.length); i++) {
         var scoreItemEl = document.createElement("li");
         var name = savedScores[i].name
         var score = savedScores[i].score
