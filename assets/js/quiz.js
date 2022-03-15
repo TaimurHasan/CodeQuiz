@@ -25,7 +25,7 @@ var questions = [
         "correctChoice": "All of the above"
     },
     {
-        "question": "String values must be enclosed within ______ when being assigned to variables",
+        "question": "String values must be enclosed within ______ when being assigned to variables.",
         "choices": ["Commas", "Curly Brackets", "Quotes", "Parenthesis"],
         "correctChoice": "Quotes"
     },
