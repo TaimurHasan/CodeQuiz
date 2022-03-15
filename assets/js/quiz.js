@@ -175,9 +175,10 @@ var displayScores = function () {
         scoreListEl.appendChild(scoreItemEl);
     }
 
-    var homeBtn = document.createElement("p");
-    homeBtn.className = "quiz-btn";
-    homeBtn.innerHTML = "<a href='./index.html'>Home</a>";
+    var homeBtn = document.createElement("a");
+    homeBtn.className = "quiz-btn home-btn";
+    homeBtn.setAttribute("href", "./index.html");
+    homeBtn.textContent = "Home"
 
 
 
