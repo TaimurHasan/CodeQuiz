@@ -159,7 +159,7 @@ var displayScores = function () {
 
 
     var scoreDivEl = document.createElement("div");
-    scoreDivEl.className = "score-list";
+    scoreDivEl.className = "quiz-page score-list";
     var scoreHeadEl = document.createElement("h1");
     scoreHeadEl.textContent = "Name/High-Score";
     
