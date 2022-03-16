@@ -7,7 +7,7 @@ The link below will take you to the website hosting the Code Quiz, where you wil
 
 ## Application Details
 
-The application was built primarily using JavaScript, with support from HTML and CSS to host the quiz. Within JavaScript, a number of functions were used to clear up the main quiz display and append new items to the document. In more detail, multiple data-* attributes were used to identify the correct answer of each question, which was checked upon the user's button click to determine if the correct answer was chosen and the application's response. The application also features a timer set using the setInterval() method, which will face penalties if an incorrect answer is chosen and will end the quiz if the timer runs out. Lastly, all high scores will be stored in localStorage to keep track!
+The application was built primarily using JavaScript, with support from HTML and CSS to host the quiz. Within JavaScript, a number of functions were used to clear up the main quiz display and append new items to the document. In more detail, multiple data-* attributes were used to identify the correct answer of each question, which were checked upon the user's button clicks to determine if the correct answer was chosen and what the application's response would be. The application also features a timer set using the setInterval() method, which will face penalties if an incorrect answer is chosen and will end the quiz if the timer runs out. Lastly, all high scores are be stored in localStorage to keep track!
 
 
 **Languages Used**
